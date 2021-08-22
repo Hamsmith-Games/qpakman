@@ -1,4 +1,3 @@
-
 # QPakMan 0.66
 > by Andrew Apted.  October 2008
 
@@ -6,6 +5,16 @@
 
 QPakMan is a command-line (text only) program for managing the
 PAK and WAD files used by the games Quake, Quake II and Hexen II.
+
+## BUILDING
+
+Create a build directory and run standard cmake build commands.
+
+```bash
+mkdir build && cd build
+cmake ..
+cmake --build . -- -j8
+```
 
 ## COMMON TASKS
 
