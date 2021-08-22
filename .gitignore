@@ -1,0 +1,11 @@
+# build related files
+qpakman
+qpakman.exe
+a.out
+*.o
+*.a
+*.so
+build
+build-*
+cmake-build-*
+
