@@ -15,12 +15,12 @@ else()
 	message(SEND_ERROR "You are building on unsupported platform")
 endif()
 
-add_executable(qpakman
-	arc_spec.cc u_assert.cc u_file.cc u_util.cc im_color.cc im_image.cc
-	 im_gen.cc im_mip.cc im_png.cc im_tex.cc archive.cc pakfile.cc main.cc)
+file(GLOB SRC_FILES "src/*.cc")
+
+add_executable(qpakman ${SRC_FILES})
 
 set_property(TARGET qpakman PROPERTY COMPILE_FLAGS -fno-rtti)
 
-target_link_libraries(qpakman -lm ${PNG_LIBRARIES})
+target_link_libraries(qpakman m ${PNG_LIBRARIES})
 
 install(TARGETS qpakman RUNTIME DESTINATION bin)
