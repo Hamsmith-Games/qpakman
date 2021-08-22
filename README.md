@@ -1,24 +1,20 @@
 
-QPakMan 0.66 README
-===================
+# QPakMan 0.66
+> by Andrew Apted.  October 2008
 
-by Andrew Apted.  October 2008
-
-
-INTRODUCTION
-------------
+## INTRODUCTION
 
 QPakMan is a command-line (text only) program for managing the
 PAK and WAD files used by the games Quake, Quake II and Hexen II.
 
+## COMMON TASKS
 
-COMMON TASKS
-============
+### 1. Listing the contents of PAK and WAD files:
 
-1. Listing the contents of PAK and WAD files:
-
-   qpakman -list pak1.pak
-   qpakman -list gfx.wad
+```bash
+qpakman -list pak1.pak
+qpakman -list gfx.wad
+```
 
 Shows all the lumps contained in the PAK or WAD file.  The
 first big number (prefixed by +) is the offset of the lump
@@ -28,19 +24,22 @@ In the WAD format there is a type letter for each lump,
 shown after the size and before the name.  Here is a list
 of all the types (only 'M' and 'P' are common) :
 
-      M  :  Miptex texture
-      P  :  PIC image
-      x  :  unknown / invalid
+| Type letter | Lump |
+|:-:|:---|
+| M | Miptex texture |
+| P | PIC image |
+| x | unknown / invalid |
+| C | Color palette |
+| L | Label |
+| S | Sound |
+| T | QTex |
 
-      C  :  Color palette
-      L  :  Label
-      S  :  Sound
-      T  :  QTex
 
+### 2. Unpacking a PAK file:
 
-2. Unpacking a PAK file:
-
+```bash
    qpakman -extract pak0.pak
+```
 
 The entire contents of the PAK file are extracted into the
 current folder.  If a file already exists, it will NOT be
@@ -51,9 +50,11 @@ will be converted to PNG image format during unpack.  This
 can be suppressed with the -raw option.
 
 
-3. Creating a PAK file:
+### 3. Creating a PAK file:
 
+```bash
    qpakman FILES.... -o dest.pak
+```
 
 All the specified files are stored in a newly created PAK file.
 Folders can be given and their contents are recursively added
@@ -68,9 +69,11 @@ WAL format (Quake II only).  The -raw option prevents this.
 [[TODO: palette.lmp & fontsize.lmp]]
 
 
-4. Unpacking a WAD file:
+### 4. Unpacking a WAD file:
 
+```bash
    qpakman -extract textures.wad
+```
 
 The whole contents of the WAD file are extracted as PNG images
 into the current folder.  If a file already exists, it will NOT
@@ -82,10 +85,12 @@ QPakMan will convert them to a prefix (four letters and '_')
 while unpacking, and reconvert to a symbol while packing, as
 per the following table:
 
-      *   star_
-      +   plus_
-      -   minu_
-      /   divd_
+| Symbol | Packed symbol |
+|:-:|:--|
+| * | star_ |
+| + | plus_ |
+| - | minu_ |
+| / | divd_ |
 
 There are also textures which contain "full bright" pixels,
 palette colors in the range 224-255 which are never drawn
@@ -95,9 +100,11 @@ suffix (for example "tlight03_fbr.png"), and will only use
 full bright pixels while packing if that suffix is present.
 
 
-5. Creating a textures WAD:
+### 5. Creating a textures WAD:
 
+```bash
    qpakman IMAGES... -o textures.wad
+```
 
 All the specified images are converted to MIPTEX (Quake's
 texture format) and stored in a newly created WAD file.
@@ -106,9 +113,11 @@ Currently the input images must be in PNG format.
 See the notes above about filename conventions.
 
 
-6. Creating the GFX.WAD file:
+### 6. Creating the GFX.WAD file:
 
+```bash
    qpakman IMAGES... -o GFX.WAD
+```
 
 This stores the images as PIC format in a newly created
 file called "GFX.WAD" (upper or lower case does not matter).
@@ -119,9 +128,11 @@ Conversion to PIC format uses all colors in the palette
 (no special treatment of full bright pixels).
 
 
-7. Making a texture wad for editing:
+### 7. Making a texture wad for editing:
 
+```bash
    qpakman -maketex *.pak -o textures.wad
+```
 
 This creates a texture WAD which a quake editor (like Quark
 or GTKradiant) needs to work properly.  You need to specify
@@ -129,16 +140,14 @@ the PAK files for the full game (Quake I or Hexen II).  It
 can also process individual BSP files.
 
 
-COMMON OPTIONS
-==============
+## COMMON OPTIONS
 
-Options have a short form (like -g) and a long form (-game),
+Options have a short form (like `-g`) and a long form (`-game`),
 it doesn't matter which one you use.  Some options take a
 value or keyword after them, which must be separated from the
-option by a space (like: -game hexen2).
+option by a space (like: `-game hexen2`).
 
-
--g -game  XXX    This specifies which game the PAK or WAD
+`-g -game  XXX`    This specifies which game the PAK or WAD
                  is for.  It sets the default palette and
                  might affect how lumps are converted.
 
@@ -146,23 +155,23 @@ option by a space (like: -game hexen2).
                     q1   quake1   h2   hexen2
                     q2   quake2   hak  haktoria
 
--c -colors  XXX  Lets you load a different palette than
+`-c -colors  XXX`  Lets you load a different palette than
                  the default one (even when -game is used).
 
                  Must be followed by a filename for the
                  palette.  It can be either raw format
                  (768 bytes) or text format (768 numbers).
 
--f -force        Forces extracted files to overwrite any
+`-f -force`        Forces extracted files to overwrite any
                  existing file with the same name.  Normally
                  QPakMan will not overwrite existing files
                  when extracting from a PAK or WAD.
 
--r -raw          Prevents conversion of lumps (especially
+`-r -raw`          Prevents conversion of lumps (especially
                  from/to PNG images) while packing or
                  unpacking a PAK file.
 
--p -pic          When creating a WAD, stores the images in
+`-p -pic`          When creating a WAD, stores the images in
                  Quake PIC format instead of MIPTEX format.
 
                  NOTE: this option is automatically enabled
@@ -174,27 +183,29 @@ option by a space (like: -game hexen2).
                  raw blocks of pixels.
 
 
-LESS COMMON TASKS
-=================
+## LESS COMMON TASKS
 
-1. Creating an inverse palette lump for Hexen II:
+### 1. Creating an inverse palette lump for Hexen II:
 
+```bash
    qpakman -game h2 -o invpal.lmp
+```
 
+### 2. Creating an inverse palette lump for Quake II:
 
-2. Creating an inverse palette lump for Quake II:
-
+```bash
    qpakman -game q2 -o 16to8.dat
+```
 
+### 3. Making the tint tables for Hexen II:
 
-3. Making the tint tables for Hexen II:
-
+```bash
    qpakman -game h2 -o tinttab.lmp
    qpakman -game h2 -o tinttab2.lmp
+```
 
 
-COPYRIGHT and LICENSE
----------------------
+## COPYRIGHT and LICENSE
 
 Copyright (C) 2008  Andrew Apted
 
@@ -209,8 +220,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 
-CONTACT DETAILS
----------------
+## CONTACT DETAILS
 
 Email: <ajapted@gmail.com>
 
